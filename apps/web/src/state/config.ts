@@ -75,18 +75,18 @@ export const DEFAULT_ORBIT: OrbitConfig = {
 };
 
 export const DEFAULT_CONFIG: AppConfig = {
-  mode: 'daemon',
+  mode: 'api',
   apiKey: '',
-  baseUrl: 'https://api.anthropic.com',
-  model: 'claude-sonnet-4-5',
+  baseUrl: 'http://ai2.novago.tech/v1',
+  model: 'qwen3.8-27b',
   // New configs should be explicit. loadConfig() still detects parsed legacy
   // saved configs that did not have this field and migrates those from their
   // saved baseUrl/model before applying the current migration version.
-  apiProtocol: 'anthropic',
+  apiProtocol: 'openai',
   apiVersion: '',
   apiProtocolConfigs: {},
   configMigrationVersion: CONFIG_MIGRATION_VERSION,
-  apiProviderBaseUrl: 'https://api.anthropic.com',
+  apiProviderBaseUrl: 'http://ai2.novago.tech/v1',
   agentId: null,
   skillId: null,
   designSystemId: null,
@@ -356,6 +356,13 @@ export const KNOWN_PROVIDERS: KnownProvider[] = [
     requiresApiKey: false,
   },
   {
+    label: 'Novago',
+    protocol: 'openai',
+    baseUrl: 'http://ai2.novago.tech/v1',
+    preferredModels: ['qwen3.8-27b', 'deepseek-r1-distill-qwen-7b', 'qwen3.5-27b-sushi-coder-rl'],
+    requiresApiKey: false,
+  },
+  {
     label: 'MiniMax — OpenAI',
     protocol: 'openai',
     baseUrl: 'https://api.minimax.io/v1',
@@ -532,6 +539,7 @@ const BYOK_PROVIDER_PRESET_SPECS = [
   { id: 'volcengine', title: 'Volcengine Ark', providerLabel: 'Volcengine Ark' },
   { id: 'qianfan', title: 'Baidu Qianfan', providerLabel: 'Baidu Qianfan' },
   { id: 'vllm', title: 'vLLM', providerLabel: 'vLLM' },
+  { id: 'novago', title: 'Novago', providerLabel: 'Novago' },
   { id: 'mimo', title: 'Xiaomi MiMo', providerLabel: 'MiMo (Xiaomi) — OpenAI' },
   { id: 'minimax', title: 'MiniMax', providerLabel: 'MiniMax — Anthropic (CN)' },
   { id: 'moonshot', title: 'Moonshot', providerLabel: 'Moonshot' },

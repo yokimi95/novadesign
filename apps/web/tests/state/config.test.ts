@@ -1245,7 +1245,7 @@ describe('loadConfig', () => {
 
     const config = loadConfig();
 
-    expect(config.apiProtocol).toBe('anthropic');
+    expect(config.apiProtocol).toBe('openai');
     expect(config.apiKey).toBe('');
     expect(config.apiVersion).toBe('');
     expect(config.baseUrl).toBe(DEFAULT_CONFIG.baseUrl);
@@ -1283,7 +1283,7 @@ describe('loadConfig', () => {
 
     const config = loadConfig();
 
-    expect(config.apiProtocol).toBe('anthropic');
+    expect(config.apiProtocol).toBe('openai');
     expect(config.apiKey).toBe('');
     expect(config.apiVersion).toBe('');
     expect(config.baseUrl).toBe(DEFAULT_CONFIG.baseUrl);
@@ -1299,7 +1299,7 @@ describe('loadConfig', () => {
     const persisted = JSON.parse(
       store.get('open-design:config') ?? '{}',
     ) as Partial<AppConfig>;
-    expect(persisted.apiProtocol).toBe('anthropic');
+    expect(persisted.apiProtocol).toBe('openai');
     expect(persisted.apiKey).toBe('');
     expect(persisted.apiVersion).toBe('');
     expect(persisted.baseUrl).toBe(DEFAULT_CONFIG.baseUrl);
@@ -1475,7 +1475,7 @@ describe('loadConfig', () => {
   });
 
   it('sets an explicit apiProtocol for new default configs', () => {
-    expect(DEFAULT_CONFIG.apiProtocol).toBe('anthropic');
+    expect(DEFAULT_CONFIG.apiProtocol).toBe('openai');
     expect(DEFAULT_CONFIG.configMigrationVersion).toBe(3);
     expect(DEFAULT_CONFIG.accentColor).toBe('#353535');
   });

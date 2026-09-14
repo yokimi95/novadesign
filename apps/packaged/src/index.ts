@@ -175,7 +175,7 @@ async function main(): Promise<void> {
     });
     if (existingOwner != null) {
       throw new Error(
-        `Cannot install MCP while the existing ${existingOwner.stamp.mode} desktop runtime has no healthy daemon. Quit Open Design and retry.`,
+        `Cannot install MCP while the existing ${existingOwner.stamp.mode} desktop runtime has no healthy daemon. Quit Novago and retry.`,
       );
     }
   }

@@ -298,7 +298,7 @@ const MIN_SPLASH_MS = 2000;
 // While the splash is up, the real web app loads in a hidden main window. We
 // reveal it only once the web bundle reports it has actually mounted (it sets
 // `data-od-app-mounted="1"` on first paint of the real UI), so the user never
-// sees the web's own "Loading OpenDesign…" shell flash between the splash and
+// sees the web's own "Loading Novago Canvas…" shell flash between the splash and
 // the app. Poll cadence + a hard ceiling so a missing mount signal can never
 // strand the user on the splash forever.
 const WEB_MOUNT_POLL_MS = 80;
@@ -942,7 +942,7 @@ function createPendingHtml(): string {
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>OpenDesign</title>
+    <title>Novago</title>
     <style>
       html,
       body {
@@ -1188,9 +1188,9 @@ function buildCrashReportUrl(ctx: RendererCrashScreenContext): string {
 // Prefilled mailto for the "Email us" action — same auto-filled diagnostics as
 // the issue, for users who'd rather email than open a GitHub account.
 function buildCrashMailtoUrl(ctx: RendererCrashScreenContext): string {
-  const subject = `OpenDesign keeps crashing (renderer ${ctx.reason})`;
+  const subject = `Novago keeps crashing (renderer ${ctx.reason})`;
   const body = [
-    "The OpenDesign desktop app crashed several times in a row on my device.",
+    "The Novago desktop app crashed several times in a row on my device.",
     "",
     "(If possible, attach the diagnostics file you saved with the “Save logs…” button.)",
     "",
@@ -1208,7 +1208,7 @@ function createRendererCrashHtml(ctx: RendererCrashScreenContext): string {
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>OpenDesign</title>
+    <title>Novago</title>
     <style>
       /* Palette mirrors the app's neutral design tokens (apps/web tokens.css):
          warm off-white + near-black, no accent color — matching the black/white
@@ -1304,7 +1304,7 @@ function createRendererCrashHtml(ctx: RendererCrashScreenContext): string {
   </head>
   <body>
     <div class="panel">
-      <p class="title">OpenDesign keeps closing on this device</p>
+      <p class="title">Novago keeps closing on this device</p>
       <p class="body">The app window crashed several times in a row, so it has paused to avoid getting stuck reloading.</p>
       <p class="body">It will try to recover on its own in a few minutes.</p>
       <div class="actions">
@@ -1314,7 +1314,7 @@ function createRendererCrashHtml(ctx: RendererCrashScreenContext): string {
       <p class="hint" id="diag-note">Saved logs include a crash memory snapshot so we can find the cause. Nothing is sent unless you choose to share it.</p>
       <p class="status" id="status" aria-live="polite"></p>
       <p class="email" id="email-line">Prefer email? <a href="#" id="email">Contact ${SUPPORT_EMAIL}</a></p>
-      <p class="hint">If this keeps happening, quitting and reinstalling OpenDesign usually resolves it.</p>
+      <p class="hint">If this keeps happening, quitting and reinstalling Novago usually resolves it.</p>
     </div>
     <script>
       (function () {
@@ -1402,7 +1402,7 @@ const SPLASH_STAGE_SEQUENCE: readonly SplashBootStage[] = [
 ];
 
 const SPLASH_STAGE_LABELS: Record<SplashBootStage, string> = {
-  starting: "Starting OpenDesign",
+  starting: "Starting Novago",
   engine: "Starting the local engine",
   engineReady: "Local engine ready",
   interface: "Preparing the interface",
@@ -1544,7 +1544,7 @@ export function createSplashWindow(): SplashWindowHandle {
     height: 900,
     resizable: false,
     show: true,
-    title: "OpenDesign",
+    title: "Novago",
     width: 1280,
     webPreferences: {
       contextIsolation: true,
@@ -2261,7 +2261,7 @@ export async function createDesktopRuntime(options: DesktopRuntimeOptions): Prom
 
   const consoleEntries: DesktopConsoleEntry[] = [];
   const petWindow = createDesktopPetWindow(preloadPath, options.osLocale);
-  const windowTitle = options.windowTitle ?? "OpenDesign";
+  const windowTitle = options.windowTitle ?? "Novago";
   const window = new BrowserWindow({
     height: 900,
     icon: resolveDesktopIconPath(),
@@ -2274,7 +2274,7 @@ export async function createDesktopRuntime(options: DesktopRuntimeOptions): Prom
     // Starts hidden: the splash window is what the user sees while the real web
     // app loads in here. We reveal this window only once the app has actually
     // mounted (see `revealWhenReady` below), so there is never a flash of the
-    // web's own "Loading OpenDesign…" shell.
+    // web's own "Loading Novago Canvas…" shell.
     show: false,
     title: windowTitle,
     autoHideMenuBar: true,
@@ -2840,7 +2840,7 @@ export async function createDesktopRuntime(options: DesktopRuntimeOptions): Prom
 
   // Hold the splash until BOTH (a) the web bundle reports it has mounted — it
   // sets `data-od-app-mounted="1"` on first paint of the real UI — so we never
-  // reveal the web's own dark "Loading OpenDesign…" shell, and (b) the splash
+  // reveal the web's own dark "Loading Novago Canvas…" shell, and (b) the splash
   // has been up at least MIN_SPLASH_MS so the brand clip plays through. A hard
   // ceiling guarantees the user is never stranded on the splash if the mount
   // signal never arrives.

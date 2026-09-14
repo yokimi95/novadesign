@@ -2824,9 +2824,11 @@ function OnboardingView({
 
   function handleModelSourceKeyDown(
     event: ReactKeyboardEvent<HTMLButtonElement>,
-    currentSource: 'amr' | 'local' | 'byok',
+    currentSource: 'amr',
   ): void {
-    const sources = ['amr', 'local', 'byok'] as const;
+    // Local Agent / BYOK options are hidden in this build, so the hosted
+    // source is the only radio and arrow-key navigation has nowhere to go.
+    const sources = ['amr'] as const;
     const currentIndex = sources.indexOf(currentSource);
     let nextIndex: number | null = null;
 
@@ -3654,6 +3656,8 @@ function OnboardingView({
                 </div>
               </div>
             ) : null}
+            {/* Local Agent / Bring Your Own Key entry points are hidden in this
+                build — the sign-in card offers the Novago cloud path only. */}
             {cloudBusy ? (
               <button
                 type="button"
@@ -3663,47 +3667,12 @@ function OnboardingView({
               >
                 {t('settings.amrCancelSignIn')}
               </button>
-            ) : (
-              <div className="onboarding-cloud__alts">
-                <Button
-                  variant="subtle"
-                  className="onboarding-cloud__alt-btn"
-                  onClick={() => {
-                    emitOnboardingClick('local_coding_agent', 'select_runtime', {
-                      runtime_type: 'local_cli',
-                    });
-                    setRuntime('local');
-                    setRuntimeSetupEntry('cloud');
-                    void scanCliAgents({ preferExisting: true });
-                    setStep(2);
-                  }}
-                >
-                  <Icon name="robot" size={16} />
-                  {t('settings.onboardingLocalTitle')}
-                </Button>
-                <span className="onboarding-cloud__alts-or">
-                  {t('settings.onboardingCloudOr')}
-                </span>
-                <Button
-                  variant="subtle"
-                  className="onboarding-cloud__alt-btn"
-                  onClick={() => {
-                    emitOnboardingClick('byok', 'select_runtime', { runtime_type: 'byok' });
-                    setRuntime('byok');
-                    setRuntimeSetupEntry('cloud');
-                    setStep(2);
-                  }}
-                >
-                  <Icon name="key" size={16} />
-                  {t('settings.onboardingByokTitle')}
-                </Button>
-              </div>
-            )}
+            ) : null}
           </div>
           <footer className="onboarding-cloud__footer">
             <LanguageMenu placement="up" align="start" />
             <span>
-              © {new Date().getFullYear()} OpenDesign · {t('settings.onboardingCloudRights')}
+              © {new Date().getFullYear()} Novago · {t('settings.onboardingCloudRights')}
             </span>
           </footer>
         </div>
@@ -3725,9 +3694,11 @@ function OnboardingView({
             <h1 className="onboarding-cloud__title">
               {t('settings.onboardingExecutionTitle')}
             </h1>
-            <p className="onboarding-cloud__body">
-              {t('settings.onboardingExecutionBody')}
-            </p>
+            {t('settings.onboardingExecutionBody') ? (
+              <p className="onboarding-cloud__body">
+                {t('settings.onboardingExecutionBody')}
+              </p>
+            ) : null}
             <div
               className={onboardingSourceStyles.options}
               role="radiogroup"
@@ -3765,60 +3736,6 @@ function OnboardingView({
                 </span>
                 <span className={onboardingSourceStyles.radio} aria-hidden="true" />
               </Button>
-              <Button
-                ref={(node) => {
-                  modelSourceOptionRefs.current.local = node;
-                }}
-                variant="subtle"
-                role="radio"
-                aria-checked={modelSource === 'local'}
-                tabIndex={modelSource === 'local' ? 0 : -1}
-                className={`${onboardingSourceStyles.option} ${
-                  modelSource === 'local' ? onboardingSourceStyles.optionActive : ''
-                }`}
-                onClick={() => setModelSource('local')}
-                onKeyDown={(event) => handleModelSourceKeyDown(event, 'local')}
-              >
-                <span className={onboardingSourceStyles.optionIcon}>
-                  <Icon name="robot" size={17} />
-                </span>
-                <span className={onboardingSourceStyles.optionCopy}>
-                  <strong className={onboardingSourceStyles.optionTitle}>
-                    {t('settings.onboardingLocalTitle')}
-                  </strong>
-                  <span className={onboardingSourceStyles.optionBody}>
-                    {t('settings.onboardingLocalBody')}
-                  </span>
-                </span>
-                <span className={onboardingSourceStyles.radio} aria-hidden="true" />
-              </Button>
-              <Button
-                ref={(node) => {
-                  modelSourceOptionRefs.current.byok = node;
-                }}
-                variant="subtle"
-                role="radio"
-                aria-checked={modelSource === 'byok'}
-                tabIndex={modelSource === 'byok' ? 0 : -1}
-                className={`${onboardingSourceStyles.option} ${
-                  modelSource === 'byok' ? onboardingSourceStyles.optionActive : ''
-                }`}
-                onClick={() => setModelSource('byok')}
-                onKeyDown={(event) => handleModelSourceKeyDown(event, 'byok')}
-              >
-                <span className={onboardingSourceStyles.optionIcon}>
-                  <Icon name="key" size={17} />
-                </span>
-                <span className={onboardingSourceStyles.optionCopy}>
-                  <strong className={onboardingSourceStyles.optionTitle}>
-                    {t('settings.onboardingByokTitle')}
-                  </strong>
-                  <span className={onboardingSourceStyles.optionBody}>
-                    {t('settings.onboardingByokBody')}
-                  </span>
-                </span>
-                <span className={onboardingSourceStyles.radio} aria-hidden="true" />
-              </Button>
             </div>
             <button
               type="button"
@@ -3831,7 +3748,7 @@ function OnboardingView({
           <footer className="onboarding-cloud__footer">
             <LanguageMenu placement="up" align="start" />
             <span>
-              © {new Date().getFullYear()} OpenDesign ·{' '}
+              © {new Date().getFullYear()} Novago ·{' '}
               {t('settings.onboardingCloudRights')}
             </span>
           </footer>

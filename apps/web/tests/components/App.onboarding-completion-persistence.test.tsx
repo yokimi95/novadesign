@@ -330,7 +330,7 @@ describe('App onboarding completion persistence', () => {
 
     expect(resetExecutionConfigAfterSignOut(current)).toMatchObject({
       onboardingCompleted: false,
-      mode: 'daemon',
+      mode: 'api',
       agentId: null,
       agentModels: {},
       agentCliEnv: {},
@@ -404,7 +404,7 @@ describe('App onboarding completion persistence', () => {
     expect(mockedSyncConfigToDaemon).toHaveBeenLastCalledWith(
       expect.objectContaining({
         onboardingCompleted: false,
-        mode: 'daemon',
+        mode: 'api',
         agentId: null,
         apiKey: 'persisted-key',
         model: 'gpt-5',
